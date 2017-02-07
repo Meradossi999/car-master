@@ -1,0 +1,18 @@
+- model_class = Car
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h3 All cars
+= form_tag destroy_multiple_cars_path, method: :delete do 
+  %div#all_cars_list
+    = render partial: 'cars_table_with_options', locals: {:cars => @cars}, cache: true
+            
+= link_to t('.new', :default => t("helpers.links.new")), new_car_path, :class => 'btn btn-primary'
+
+- unless user_signed_in?
+  %h3 List cars has at least 200HP
+  = render partial: 'cars_table', locals: {:cars => @cars_200}
+  
+  %h3 List cars which has at least 200HP with grey color add by woman
+  = render partial: 'cars_table', locals: {:cars => @cars_grey_200_female}
+  
